@@ -5,6 +5,7 @@ module ActsAsEncryptedWithGpgme
     base.extend(ClassMethods)
   end
 
+  #@@auto_decrypt = true
   @@passphrase_callbacks = Hash.new
 
   # Associate <i>key</i> and <i>passphrase</i>.
@@ -63,6 +64,9 @@ module ActsAsEncryptedWithGpgme
       else
         raise ArgumentError, "fields must be an array or a hash"
       end
+
+      #auto_decrypt = options[:auto_decrypt] || true
+      #write_inheritable_attribute :auto_decrypt, auto_decrypt
 
       default_options = options[:default_options] || Hash.new
       encrypted_fields.each do |field, field_options|

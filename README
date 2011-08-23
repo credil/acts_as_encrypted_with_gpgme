@@ -72,6 +72,31 @@ and provide the passphrase to unlock the key; add the following to
 
  ActsAsEncryptedWithGpgme.set_passphrase('AC5C76C1', 'your passphrase')
 
+==== Selective encryption
+
+One useful situation where you use asymmetric encryption is that your front
+end collects sensitive information (e.g. credit card info, Census data, etc.)
+and then encrypts to a public key and stores it.  The front end does not have
+the private key available and so even a complete compromise gains nothing
+other than the data currently being transacted (which is in memory).
+
+On another machine, offline, with the private key loaded, one can then set
+the :key field.   If you want to do this selectively, such as
+if $GPG_AGENT_INFO is set, then set "auto_decrypt => false", and the
+encrypted fields will not be decrypted until you explicitely do the work:
+
+    pw = if ENV['GPG_AGENT_INFO']
+           begin
+             GPGME::decrypt(GPGME::Data.new(sip_password), nil)
+           rescue GPGME::Error::NoData
+             'emptypw'
+           rescue
+             'brokenpw'
+           end
+         else
+           'fakepw'
+         end
+
 === Using a symmetric cipher
 
 Symmetric encryption can be used in the same way as public-key
