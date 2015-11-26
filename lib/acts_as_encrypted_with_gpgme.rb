@@ -49,8 +49,9 @@ module ActsAsEncryptedWithGpgme
     #   decryption).
     def acts_as_encrypted_with_gpgme(options = Hash.new)
       encrypted_fields = Hash.new
-      write_inheritable_attribute :encrypted_fields, encrypted_fields
-      class_inheritable_hash :encrypted_fields
+      class_attribute :encrypted_fields
+      self.encrypted_fields = encrypted_fields
+
       include ActsAsEncryptedWithGpgme::InstanceMethods
 
       fields = options[:fields]
