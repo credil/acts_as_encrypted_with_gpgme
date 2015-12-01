@@ -1,5 +1,7 @@
 # Copyright (c) 2009 Daiki Ueno, released under the MIT license
 
+require 'gpgme'
+
 module ActsAsEncryptedWithGpgme
   def self.included(base)       # :nodoc:
     base.extend(ClassMethods)
