@@ -1,4 +1,5 @@
 # Copyright (c) 2009 Daiki Ueno, released under the MIT license
+# Updates 2015 Michael Richardson <mcr@credil.org>
 
 require 'gpgme'
 
