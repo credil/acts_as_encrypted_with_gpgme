@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'acts_as_encrypted_with_gpgme'
-  s.version     = '1.0.0'
-  s.date        = '2015-11-26'
+  s.version     = '1.0.1'
+  s.date        = '2015-12-01'
   s.summary     = "Makes a column encrypted, uses asymmetric crypto. Packaged by mcr."
   s.description = "This gem lets you encrypt a column in an active_record using the ruby gpgme library. "
   s.authors     = ["Daiki Ueno", "Michael Richardson"]
