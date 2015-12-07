@@ -95,7 +95,7 @@ module ActsAsEncryptedWithGpgme
     def encrypt                 # :nodoc:
       encrypted_fields.each do |field, field_options|
         next unless self[field] && changed.include?(field.to_s)
-        self[field] = ::GPGME::encrypt(field_options[:recipients],
+        self[field] = GPGME::encrypt(field_options[:recipients],
                                      self[field],
                                      encrypt_options_for_field(field))
       end
@@ -105,7 +105,7 @@ module ActsAsEncryptedWithGpgme
       encrypted_fields.each do |field, field_options|
         next unless self[field]
         next if field_options[:recipients] && !field_options[:key]
-        self[field] = ::GPGME::decrypt(self[field],
+        self[field] = GPGME::decrypt(self[field],
                                      decrypt_options_for_field(field))
       end
     end
