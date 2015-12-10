@@ -1,4 +1,4 @@
-GPGME::check_version("1.1.5")
+GPGME::check_version("2.0.10")
 GPGME::engine_check_version(GPGME::PROTOCOL_OpenPGP)
 
 homedir = Rails.root.to_s + '/config/gpgme'

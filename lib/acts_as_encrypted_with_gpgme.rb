@@ -95,12 +95,12 @@ module ActsAsEncryptedWithGpgme
     def encrypt                 # :nodoc:
       encrypted_fields.each do |field, field_options|
         next unless self[field] && changed.include?(field.to_s)
-        GPGME::Ctx.new(:offline => true,
-                       :armor   => true) do |ctx|
-          self[field] = ctx.encrypt(field_options[:recipients],
-                                    self[field])
-                                    #GPGME::Data.new,
-                                    #encrypt_options_for_field(field))
+        recp = field_options[:recipients]
+        GPGME::Crypto.new do |crypto|
+          self[field] = crypto.encrypt(self[field],
+                                       :recipients => recp,
+                                       :always_trust => true,
+                                       :armor => true)
         end
       end
     end
@@ -109,9 +109,8 @@ module ActsAsEncryptedWithGpgme
       encrypted_fields.each do |field, field_options|
         next unless self[field]
         next if field_options[:recipients] && !field_options[:key]
-        GPGME::Ctx.new(:offline => true,
-                       :armor   => true) do |ctx|
-          self[field] = ctx.decrypt(self[field], GPGME::Data.new)
+        GPGME::Crypto.new do |crypto|
+          self[field] = crypto.decrypt(self[field])
         end
       end
     end
